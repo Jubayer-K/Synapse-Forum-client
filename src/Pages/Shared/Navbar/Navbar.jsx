@@ -92,7 +92,7 @@ const Navbar = () => {
             <DarkMode></DarkMode>
             <div className="flex items-center mt-4 lg:mt-0">
               <div className="indicator relative">
-                <span className="indicator-item lg:block text-center absolute bottom-5 right-2 items-center badge bg-gray-300 text-red-700 border-none">
+                <span className="indicator-item lg:block text-center absolute bottom-5 right-2 items-center badge bg-gray-100 text-blue-400 border-none">
                   1
                 </span>
                 <button
