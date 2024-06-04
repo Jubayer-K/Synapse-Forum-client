@@ -4,7 +4,7 @@ const Announcement = () => {
       <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
         Important <span className="text-blue-500 ">Announcement</span>
       </h1>
-      <div className="grid w-full grid-cols-1 gap-8 mt-8 2xl:grid-cols-4 lg:mt-16 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-6 md:flex-row max-w-screen-2xl mx-auto">
         <div className="w-full p-8 bg-white rounded-md shadow-lg dark:bg-gray-800">
           <p className="leading-loose text-gray-500 dark:text-gray-400">
             “ Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ea

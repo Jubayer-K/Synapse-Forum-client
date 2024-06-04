@@ -25,7 +25,7 @@ const DarkMode = () => {
   };
   return (
     <>
-      <button onClick={handleTheme} className="btn btn-circle dark:text-white transition-all text-xl ">
+      <button onClick={handleTheme} className="btn btn-circle border-none dark:text-white transition-all text-xl ">
         {theme === "dark" ? (
           <CiLight></CiLight>
         ) : (
