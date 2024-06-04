@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CiLight ,CiDark } from "react-icons/ci";
 
 const DarkMode = () => {
   const [theme, setTheme] = useState("light");
@@ -23,15 +24,15 @@ const DarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
   return (
-    <div className="hidden md:block">
-      <button onClick={handleTheme} className="btn btn-circle glass bg-gray-800 dark:bg-transparent text-white dark:text-white text-xl">
+    <>
+      <button onClick={handleTheme} className="btn btn-circle dark:text-white transition-all text-xl ">
         {theme === "dark" ? (
-          "light"
+          <CiLight></CiLight>
         ) : (
-          "Dark"
+          <CiDark></CiDark>
         )}
       </button>
-    </div>
+    </>
   );
 };
 

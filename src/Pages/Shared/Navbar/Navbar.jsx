@@ -1,4 +1,7 @@
 import { useState } from "react";
+import navlogowht from "../../../assets/logowhite.png";
+import DarkMode from "../DarkMode/DarkMode";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -6,24 +9,27 @@ const Navbar = () => {
   const navOptions = (
     <>
       <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-        <a
-          href="#"
-          className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Home
-        </a>
-        <a
-          href="#"
-          className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Membership
-        </a>
-        <a
-          href="#"
-          className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          Join US 
-        </a>
+        <Link to={'/'}>
+          <div
+            className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Home
+          </div>
+        </Link>
+        <Link to={'/membership'}>
+          <div
+            className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Membership
+          </div>
+        </Link>
+        <Link to={'/login'}>
+          <div
+            className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Join US
+          </div>
+        </Link>
       </div>
     </>
   );
@@ -34,13 +40,8 @@ const Navbar = () => {
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="flex items-center justify-between">
             <a href="#">
-              <img
-                className="w-auto h-6 sm:h-7"
-                src="https://merakiui.com/images/full-logo.svg"
-                alt=""
-              />
+              <img className="w-44 dark:invert" src={navlogowht} alt="" />
             </a>
-
             {/* Mobile menu button */}
             <div className="flex lg:hidden">
               <button
@@ -93,6 +94,7 @@ const Navbar = () => {
             }`}
           >
             {navOptions}
+            <DarkMode></DarkMode>
             <div className="flex items-center mt-4 lg:mt-0">
               <button
                 className="hidden mx-4 text-gray-600 transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
@@ -128,10 +130,10 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white dark:bg-slate-500 dark:text-white rounded-box w-52"
                 >
                   <li>
-                    <p className="justify-between text-gray-600 ">
+                    <p className="justify-between text-gray-500 dark:text-gray-400 ">
                       Profile
                       <span className="badge">New</span>
                     </p>

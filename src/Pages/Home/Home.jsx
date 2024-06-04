@@ -1,10 +1,10 @@
-import DarkMode from "../Shared/DarkMode/DarkMode";
+import Banner from "./Banner/Banner";
+
 
 const Home = () => {
     return (
         <>
-            <h1 className="btn">This is home</h1>
-            <DarkMode></DarkMode>
+            <Banner></Banner>
         </>
     );
 };
