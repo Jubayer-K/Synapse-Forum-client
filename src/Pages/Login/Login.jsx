@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from '../../assets/logowhite.png'
 
 const Login = () => {
   return (
@@ -14,7 +15,7 @@ const Login = () => {
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
               <h2 className="text-2xl font-bold text-white sm:text-3xl">
-                Meraki UI
+                Synapse
               </h2>
               <p className="max-w-xl mt-3 text-gray-300">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
@@ -30,8 +31,8 @@ const Login = () => {
             <div className="text-center">
               <div className="flex justify-center mx-auto">
                 <img
-                  className="w-auto h-7 sm:h-8"
-                  src="https://merakiui.com/images/logo.svg"
+                  className="w-auto"
+                  src={logo}
                   alt=""
                 />
               </div>

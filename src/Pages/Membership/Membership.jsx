@@ -34,7 +34,7 @@ const Membership = () => {
 
                   <p className="mt-1 text-gray-500 dark:text-gray-300">Yearly payment</p>
 
-                  <button className="btn w-full bg-gray-200 text-gray-400">
+                  <button className="btn w-full border-none no-animation bg-gray-200 text-gray-400">
                     Start Now
                   </button>
                 </div>
