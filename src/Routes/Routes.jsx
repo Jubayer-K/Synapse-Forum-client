@@ -9,6 +9,11 @@ import UserDashboard from "../Layout/UserDashboard/UserDashboard";
 import AddPost from "../Pages/AddPost/AddPost";
 import MyPost from "../Pages/MyPost/MyPost";
 import MyProfile from "../Pages/MyProfile/MyProfile";
+import AdminDashboard from "../Layout/AdminDashboard/AdminDashboard";
+import AdminProfile from "../Pages/AdminProfile/AdminProfile";
+import Announcement from "../Layout/AdminDashboard/Announcement/Announcement";
+import ManageUsers from "../Layout/AdminDashboard/ManageUsers/ManageUsers";
+import ReportedActivities from "../Layout/AdminDashboard/ReportedActivities/ReportedActivities";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +54,28 @@ export const router = createBrowserRouter([
       {
         path: "my-profile",
         element: <MyProfile></MyProfile>,
+      },
+    ],
+  },
+  {
+    path: "admin-dashboard",
+    element: <AdminDashboard></AdminDashboard>,
+    children: [
+      {
+        path: "users",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "report",
+        element: <ReportedActivities></ReportedActivities>,
+      },
+      {
+        path: "announcement",
+        element: <Announcement></Announcement>,
+      },
+      {
+        path: "admin-profile",
+        element: <AdminProfile></AdminProfile>,
       },
     ],
   },

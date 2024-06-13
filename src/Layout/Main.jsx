@@ -7,7 +7,9 @@ const Main = () => {
     <>
       <div className="dark:bg-slate-800">
         <Navbar></Navbar>
-        <Outlet></Outlet>
+        <div className="max-w-screen-2xl mx-auto">
+          <Outlet></Outlet>
+        </div>
         <Footer></Footer>
       </div>
     </>

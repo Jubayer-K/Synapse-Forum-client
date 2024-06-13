@@ -22,14 +22,14 @@ const Membership = () => {
             <div className="mt-8 space-y-8 md:-mx-4 md:flex md:items-center md:justify-center md:space-y-0 xl:mt-0">
               <div className="max-w-sm mx-auto border rounded-lg md:mx-4 dark:border-gray-700">
                 <div className="p-6">
-                  <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">Free</h1>
+                  <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">Bronze</h1>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-300">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam voluptatibus
+                  Join our community and enjoy essential forum features. Perfect for new members.
                   </p>
 
                   <h2 className="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl dark:text-gray-300">
-                    $0.00 <span className="text-base font-medium">/Month</span>
+                    Free <span className="text-base font-medium">/Month</span>
                   </h2>
 
                   <p className="mt-1 text-gray-500 dark:text-gray-300">Yearly payment</p>
@@ -53,7 +53,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">All limited links</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Access to all public forums</span>
                     </div>
 
                     <div className="flex items-center">
@@ -64,7 +64,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Own analytics platform</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Participate in discussions</span>
                     </div>
 
                     <div className="flex items-center">
@@ -75,7 +75,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Chat support</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Basic customer support</span>
                     </div>
 
                     <div className="flex items-center">
@@ -86,7 +86,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Optimize hashtags</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Post and reply to threads</span>
                     </div>
 
                     <div className="flex items-center">
@@ -97,18 +97,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Mobile app</span>
-                    </div>
-
-                    <div className="flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path
-                          fillRule="evenodd"
-                          d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Unlimited users</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Upto 5 posts/month</span>
                     </div>
                   </div>
                 </div>
@@ -116,10 +105,10 @@ const Membership = () => {
 
               <div className="max-w-sm mx-auto border rounded-lg md:mx-4 dark:border-gray-700">
                 <div className="p-6">
-                  <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">Standard</h1>
+                  <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">Gold</h1>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-300">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam voluptatibus
+                  Unlock advanced features and enhance your forum experience with our Premium plan.
                   </p>
 
                   <h2 className="mt-4 text-2xl font-semibold text-gray-700 sm:text-3xl dark:text-gray-300">
@@ -128,7 +117,7 @@ const Membership = () => {
 
                   <p className="mt-1 text-gray-500 dark:text-gray-300">Yearly payment</p>
 
-                  <button className="w-full px-4 py-2 mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                  <button className="w-full btn mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                     Start Now
                   </button>
                 </div>
@@ -136,7 +125,7 @@ const Membership = () => {
                 <hr className="border-gray-200 dark:border-gray-700" />
 
                 <div className="p-6">
-                  <h1 className="text-lg font-medium text-gray-700 capitalize lg:text-xl dark:text-white">What’s included:</h1>
+                  <h1 className="text-lg font-medium text-gray-700 capitalize lg:text-xl dark:text-white">What&apos;s included:</h1>
 
                   <div className="mt-8 space-y-4">
                     <div className="flex items-center">
@@ -147,7 +136,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">All limited links</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Access to all public and private forums</span>
                     </div>
 
                     <div className="flex items-center">
@@ -158,7 +147,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Own analytics platform</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Enhanced participation in discussions</span>
                     </div>
 
                     <div className="flex items-center">
@@ -169,7 +158,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Chat support</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Priority customer support</span>
                     </div>
 
                     <div className="flex items-center">
@@ -180,7 +169,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Optimize hashtags</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Create and manage threads</span>
                     </div>
 
                     <div className="flex items-center">
@@ -191,7 +180,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Mobile app</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Ad-free browsing</span>
                     </div>
 
                     <div className="flex items-center">
@@ -202,7 +191,7 @@ const Membership = () => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="mx-4 text-gray-700 dark:text-gray-300">Unlimited users</span>
+                      <span className="mx-4 text-gray-700 dark:text-gray-300">Unlimited posts/month</span>
                     </div>
                   </div>
                 </div>

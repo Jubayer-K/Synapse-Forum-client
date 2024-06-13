@@ -126,8 +126,13 @@ const Navbar = () => {
                     </p>
                   </li>
                   <li>
-                    <Link to={"/user-dashboard"}>
+                    <Link to={"/user-dashboard/my-profile"}>
                       <p className="hover:text-blue-400">Dashboard</p>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"/admin-dashboard/admin-profile"}>
+                      <p className="hover:text-blue-400">Admin Dashboard</p>
                     </Link>
                   </li>
                   <li>
