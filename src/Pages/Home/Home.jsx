@@ -4,6 +4,7 @@ import PostDetails from "../PostDetails/PostDetails";
 import PostCard from "../Shared/PostCard/PostCard";
 import Announcement from "./Announcement/Announcement";
 import Banner from "./Banner/Banner";
+import LoadingSkeleton from '../Shared/LoadingSkeleton/LoadingSkeleton';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -39,7 +40,7 @@ const Home = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSkeleton />;
   }
 
   return (
@@ -72,7 +73,7 @@ const Home = () => {
               key={index}
               onClick={(e) => handleButtonClick(e, index + 1)}
               className={`px-4 py-2 mx-1 text-gray-700 bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 ${
-                currentPage === index + 1 ? 'bg-blue-600 text-white' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+                currentPage === index + 1 ? 'bg-gray-600' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
               }`}
             >
               {index + 1}

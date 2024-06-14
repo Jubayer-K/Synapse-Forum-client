@@ -1,7 +1,82 @@
-import { Link } from "react-router-dom";
-import logo from '../../assets/logowhite.png'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/logowhite.png";
+import { LuEye, LuEyeOff } from "react-icons/lu";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../Providers/AuthProviders";
+import app from "../../firebase/firebase.config";
 
 const Login = () => {
+  const successToast = () => toast.success("User Logged In Successfully");
+  const errorToast = () => toast.error("User log in Unsuccessful !");
+  const [registerError, setRegisterError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const passErrorToast = (toastText) => toast.error(toastText);
+  const { logIn, user } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [navigate, user]);
+
+  if (user) {
+    return;
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const email = form.get("email");
+    const password = form.get("password");
+    setRegisterError("");
+    setSuccess("");
+    if (password.length < 6) {
+      passErrorToast("Length must be at least 6 character");
+      return;
+    } else if (!/[A-Z]/.test(password)) {
+      passErrorToast("Must have a Capital letter in the password");
+      return;
+    } else if (!/\d/.test(password)) {
+      passErrorToast("Must have a Numeric character in the password");
+      return;
+    } else if (!/[^A-Za-z0-9]/.test(password)) {
+      passErrorToast("Must have a Special character in the password");
+      return;
+    }
+
+    logIn(email, password)
+      .then(() => {
+        navigate(location?.state ? location.state : "/login");
+        setSuccess("User Logged in Successfully");
+        successToast();
+      })
+      .catch((error) => {
+        setRegisterError(error.message);
+        errorToast("User Login Unsuccessful !");
+      });
+  };
+  const auth = getAuth(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleGoogleSignIn = () => {
+    setRegisterError("");
+    setSuccess("");
+    signInWithPopup(auth, googleProvider)
+      .then(() => {
+        successToast();
+        setSuccess("User Logged In Successfully");
+      })
+      .catch((error) => {
+        setRegisterError(error.message);
+        errorToast("User Login Unsuccessful !");
+      });
+  };
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-screen">
@@ -30,11 +105,7 @@ const Login = () => {
           <div className="flex-1">
             <div className="text-center">
               <div className="flex justify-center mx-auto">
-                <img
-                  className="w-auto"
-                  src={logo}
-                  alt=""
-                />
+                <img className="w-auto" src={logo} alt="" />
               </div>
               <p className="mt-3 text-gray-500 dark:text-gray-300">
                 Sign in to access your account
@@ -42,7 +113,7 @@ const Login = () => {
             </div>
 
             <div className="mt-8">
-              <form>
+              <form onSubmit={handleLogin}>
                 <div>
                   <label
                     htmlFor="email"
@@ -59,7 +130,7 @@ const Login = () => {
                   />
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-6 relative">
                   <div className="flex justify-between mb-2">
                     <label
                       htmlFor="password"
@@ -76,19 +147,33 @@ const Login = () => {
                   </div>
 
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="Your Password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
+                  <h1
+                    className="cursor-pointer text-2xl absolute right-5 bottom-2 "
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <LuEyeOff></LuEyeOff> : <LuEye></LuEye>}
+                  </h1>
                 </div>
-
+                {registerError && (
+                  <p className="my-2 text-center text-sm text-red-800">{registerError}</p>
+                )}
+                {success && (
+                  <p className="my-2 text-center text-sm text-green-700">{success}</p>
+                )}
                 <div className="mt-6 flex flex-col gap-4">
                   <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     Sign in
                   </button>
-                  <button className="bg-white flex items-center text-gray-700 dark:text-gray-300 justify-center gap-x-3 text-sm sm:text-base dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5">
+                  <button
+                    onClick={handleGoogleSignIn}
+                    className="bg-white flex items-center text-gray-700 dark:text-gray-300 justify-center gap-x-3 text-sm sm:text-base dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5"
+                  >
                     <svg
                       className="w-5 h-5 sm:h-6 sm:w-6"
                       viewBox="0 0 24 24"
@@ -123,10 +208,9 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-
               <p className="mt-6 text-sm text-center text-gray-400">
                 Don&apos;t have an account yet?
-                <Link to={'/register'}>
+                <Link to={"/register"}>
                   <p className="text-blue-500 focus:outline-none focus:underline hover:underline">
                     Sign up
                   </p>

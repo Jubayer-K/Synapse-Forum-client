@@ -6,12 +6,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        poppins : "'Poppins', sans-serif",
+        nunito : "'Nunito Sans', sans-serif",
+      }
+    },
   },
-  plugins: [
-    require('daisyui'),
-  ],
-  daisyui: {
-    themes: [],
-  },
-};
+  plugins: [require("daisyui")],
+  daisyui :{
+    themes : [],
+  }
+}
+
