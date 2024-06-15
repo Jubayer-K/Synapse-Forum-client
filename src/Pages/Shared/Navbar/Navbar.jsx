@@ -20,25 +20,26 @@ const Navbar = () => {
       .catch();
   };
 
-
   const navOptions = (
     <>
       <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-        <Link to={'/'}>
+        <Link to={"/"}>
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Home
           </div>
         </Link>
-        <Link to={"/membership"} >
+        <Link to={"/membership"}>
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Membership
           </div>
         </Link>
-        <Link to={"/login"}>
-          <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-            Join US
-          </div>
-        </Link>
+        {user ? undefined : (
+          <Link to={"/login"}>
+            <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+              Join US
+            </div>
+          </Link>
+        )}
       </div>
     </>
   );
@@ -110,50 +111,54 @@ const Navbar = () => {
                   1
                 </span>
                 <button
-                className="hidden mx-4 text-gray-600 text-xl transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
-                aria-label="show notifications"
-              >
-                <FaRegBell></FaRegBell>
-              </button>
+                  className="hidden mx-4 text-gray-600 text-xl transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
+                  aria-label="show notifications"
+                >
+                  <FaRegBell></FaRegBell>
+                </button>
               </div>
-              {user? <div className="dropdown dropdown-start lg:dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="user image"
-                      src={user?.photoURL}
-                    />
+              {user ? (
+                <div className="dropdown dropdown-start lg:dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img alt="user image" src={user?.photoURL} />
+                    </div>
                   </div>
+                  <ul
+                    tabIndex={0}
+                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white dark:bg-slate-500 dark:text-white rounded-box w-52"
+                  >
+                    <li>
+                      <p className="justify-between text-gray-500 dark:text-gray-400 ">
+                        Profile
+                        <span className="badge">New</span>
+                      </p>
+                    </li>
+                    <li>
+                      <Link to={"/user-dashboard/my-profile"}>
+                        <p className="hover:text-blue-400">Dashboard</p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/admin-dashboard/admin-profile"}>
+                        <p className="hover:text-blue-400">Admin Dashboard</p>
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogOut}
+                        className="hover:text-blue-400"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white dark:bg-slate-500 dark:text-white rounded-box w-52"
-                >
-                  <li>
-                    <p className="justify-between text-gray-500 dark:text-gray-400 ">
-                      Profile
-                      <span className="badge">New</span>
-                    </p>
-                  </li>
-                  <li>
-                    <Link to={"/user-dashboard/my-profile"}>
-                      <p className="hover:text-blue-400">Dashboard</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to={"/admin-dashboard/admin-profile"}>
-                      <p className="hover:text-blue-400">Admin Dashboard</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <button onClick={handleLogOut} className="hover:text-blue-400">Logout</button>
-                  </li>
-                </ul>
-              </div> : undefined}
+              ) : undefined}
             </div>
           </div>
         </div>

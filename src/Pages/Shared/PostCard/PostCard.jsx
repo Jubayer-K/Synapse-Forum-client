@@ -53,7 +53,7 @@ const PostCard = ({ post }) => {
         <div className="flex items-center">
           <img
             className="object-cover w-10 h-10 mx-4 rounded-full sm:block"
-            src={author_image}
+            src={ author_image}
             alt="avatar"
           />
           <a

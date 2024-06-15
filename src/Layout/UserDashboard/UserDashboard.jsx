@@ -5,6 +5,8 @@ import { MdOutlineLibraryAdd } from "react-icons/md";
 import { TfiLayoutListPost } from "react-icons/tfi";
 import { GoHome } from "react-icons/go";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { Flip, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,7 +33,7 @@ const UserDashboard = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [isSidebarOpen]);
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -49,7 +51,7 @@ const UserDashboard = () => {
               alt="avatar"
             />
             <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">
-            {user?.displayName}
+              {user?.displayName}
             </h4>
             <p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
               {user?.email}
@@ -122,6 +124,17 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        transition={Flip}
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
     </>
   );
 };

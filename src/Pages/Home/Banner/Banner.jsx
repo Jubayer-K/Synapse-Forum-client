@@ -1,4 +1,6 @@
-const Banner = () => {
+import PropTypes from 'prop-types';
+
+const Banner = ({ searchTerm, onSearchChange }) => {
   return (
     <>
       <div className="bg-white dark:bg-gray-900">
@@ -6,7 +8,8 @@ const Banner = () => {
           <div className="w-full lg:w-1/2">
             <div className="w-full">
               <h1 className="text-3xl font-semibold tracking-wide text-gray-800 dark:text-white lg:text-4xl">
-                Easiest way to post your <span className="text-blue-500">thoughts</span>
+                Easiest way to post your{" "}
+                <span className="text-blue-500">thoughts</span>
               </h1>
 
               <div className="mt-8 space-y-5">
@@ -70,6 +73,8 @@ const Banner = () => {
               <form className="flex flex-col lg:flex-row">
                 <input
                   type="text"
+                  value={searchTerm}
+                  onChange={onSearchChange}
                   placeholder="Search Topics"
                   className="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0"
                 />
@@ -77,7 +82,9 @@ const Banner = () => {
                 <button className="btn dark:text-white">Search</button>
               </form>
             </div>
-            <p className="text-sm my-2 text-gray-400">Ex:&nbsp; #tech&nbsp;#photo&nbsp; #health&nbsp; etc.</p>
+            <p className="text-sm my-2 text-gray-400">
+              Ex:&nbsp; #tech&nbsp;#photo&nbsp; #health&nbsp; etc.
+            </p>
           </div>
 
           <div className="flex items-center justify-center w-full h-96 lg:w-1/2">
@@ -91,6 +98,11 @@ const Banner = () => {
       </div>
     </>
   );
+};
+
+Banner.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
 };
 
 export default Banner;

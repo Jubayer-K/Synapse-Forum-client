@@ -11,6 +11,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
   const postsPerPage = 5;
   const topRef = useRef(null);
 
@@ -39,6 +40,14 @@ const Home = () => {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredPosts = posts.filter((post) => 
+    post.tag.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return <LoadingSkeleton />;
   }
@@ -46,15 +55,15 @@ const Home = () => {
   return (
     <>
       <div ref={topRef}>
-        <Banner />
         <Announcement />
+      <Banner searchTerm={searchTerm} onSearchChange={handleSearchChange} />
       </div>
       <div className="max-w-screen-2xl mx-auto">
         <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
           Latest <span className="text-blue-500">Posts</span>
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {posts.map((post) => (
+          {filteredPosts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
         </div>

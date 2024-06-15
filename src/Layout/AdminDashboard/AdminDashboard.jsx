@@ -5,6 +5,8 @@ import { GoHome } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
 import { MdOutlineReport } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { Flip, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -127,6 +129,17 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+          transition={Flip}
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        ></ToastContainer>
     </>
   );
 };
