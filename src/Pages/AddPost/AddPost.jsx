@@ -13,8 +13,8 @@ const AddPost = () => {
     const post_title = form.title.value;
     const tag = form.tag.value;
     const post_description = form.description.value;
-    const upvote = form.upvote.value;
-    const downvote = form.downvote.value;
+    const upvote = parseInt(form.upvote.value);
+    const downvote = parseInt(form.downvote.value);
     const author_email = user.email;
     const author_image = user.photoURL;
     const author_name = user.displayName;
