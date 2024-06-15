@@ -93,9 +93,8 @@ const Login = () => {
                 Synapse
               </h2>
               <p className="max-w-xl mt-3 text-gray-300">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                libero suscipit nam temporibus molestiae
+                Welcome to Synapse. Connect with others, share knowledge, and
+                grow together. Join us and start your journey today!
               </p>
             </div>
           </div>
@@ -161,10 +160,14 @@ const Login = () => {
                   </h1>
                 </div>
                 {registerError && (
-                  <p className="my-2 text-center text-sm text-red-800">{registerError}</p>
+                  <p className="my-2 text-center text-sm text-red-800">
+                    {registerError}
+                  </p>
                 )}
                 {success && (
-                  <p className="my-2 text-center text-sm text-green-700">{success}</p>
+                  <p className="my-2 text-center text-sm text-green-700">
+                    {success}
+                  </p>
                 )}
                 <div className="mt-6 flex flex-col gap-4">
                   <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
-import { ToastContainer } from "react-toastify";
+import { Flip, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 
 const Main = () => {
@@ -15,7 +15,17 @@ const Main = () => {
         <Footer></Footer>
 
       </div>
-      <ToastContainer></ToastContainer>
+      <ToastContainer
+          transition={Flip}
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        ></ToastContainer>
     </>
   );
 };

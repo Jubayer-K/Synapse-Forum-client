@@ -1,4 +1,3 @@
-import PostCard from "../Shared/PostCard/PostCard";
 
 const MyProfile = () => {
   return (

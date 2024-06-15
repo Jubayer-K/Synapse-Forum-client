@@ -8,6 +8,7 @@ const PostCard = ({ post }) => {
     post_title,
     tag,
     author_name,
+    author_image,
     upvote,
     downvote
   } = post;
@@ -52,7 +53,7 @@ const PostCard = ({ post }) => {
         <div className="flex items-center">
           <img
             className="object-cover w-10 h-10 mx-4 rounded-full sm:block"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+            src={author_image}
             alt="avatar"
           />
           <a
@@ -74,6 +75,7 @@ PostCard.propTypes = {
     post_description: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
     author_name: PropTypes.string.isRequired,
+    author_image: PropTypes.string.isRequired,
     upvote: PropTypes.number.isRequired,
     downvote: PropTypes.number.isRequired
   }).isRequired

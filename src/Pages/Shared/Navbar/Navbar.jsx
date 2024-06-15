@@ -1,11 +1,10 @@
 import { useContext, useState } from "react";
 import navlogowht from "../../../assets/logowhite.png";
 import DarkMode from "../DarkMode/DarkMode";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaRegBell } from "react-icons/fa";
 import { AuthContext } from "../../../Providers/AuthProviders";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,26 +15,21 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut()
       .then(async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        });
-        console.log(data);
         logOutToast();
       })
       .catch();
   };
 
-  const location = new useLocation();
 
   const navOptions = (
     <>
       <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-        <Link active={location.pathname === "/"}>
+        <Link to={'/'}>
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Home
           </div>
         </Link>
-        <Link to={"/membership"}>
+        <Link to={"/membership"} >
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Membership
           </div>
@@ -122,7 +116,7 @@ const Navbar = () => {
                 <FaRegBell></FaRegBell>
               </button>
               </div>
-              <div className="dropdown dropdown-start lg:dropdown-end">
+              {user? <div className="dropdown dropdown-start lg:dropdown-end">
                 <div
                   tabIndex={0}
                   role="button"
@@ -130,8 +124,8 @@ const Navbar = () => {
                 >
                   <div className="w-10 rounded-full">
                     <img
-                      alt="Tailwind CSS Navbar component"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      alt="user image"
+                      src={user?.photoURL}
                     />
                   </div>
                 </div>
@@ -159,7 +153,7 @@ const Navbar = () => {
                     <button onClick={handleLogOut} className="hover:text-blue-400">Logout</button>
                   </li>
                 </ul>
-              </div>
+              </div> : undefined}
             </div>
           </div>
         </div>
