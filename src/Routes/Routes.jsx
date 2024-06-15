@@ -14,6 +14,7 @@ import AdminProfile from "../Pages/AdminProfile/AdminProfile";
 import Announcement from "../Layout/AdminDashboard/Announcement/Announcement";
 import ManageUsers from "../Layout/AdminDashboard/ManageUsers/ManageUsers";
 import ReportedActivities from "../Layout/AdminDashboard/ReportedActivities/ReportedActivities";
+import PostDetails from "../Pages/PostDetails/PostDetails";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/post-details/:id",
+        element: <PostDetails></PostDetails>,
+        loader : ({params}) => fetch(`${import.meta.env.VITE_API_URL}/posts/${params.id}`)
       },
     ],
   },

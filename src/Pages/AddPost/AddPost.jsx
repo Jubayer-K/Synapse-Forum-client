@@ -18,6 +18,7 @@ const AddPost = () => {
     const author_email = user.email;
     const author_image = user.photoURL;
     const author_name = user.displayName;
+    const posted_time = new Date().toISOString();
 
     const newPost = {
       post_title,
@@ -26,10 +27,10 @@ const AddPost = () => {
       author_email,
       author_image,
       author_name,
+      posted_time,
       upvote,
       downvote
     };
-    console.log(newPost);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/posts`,

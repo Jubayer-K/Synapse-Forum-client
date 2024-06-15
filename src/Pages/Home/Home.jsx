@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import PostDetails from "../PostDetails/PostDetails";
 import PostCard from "../Shared/PostCard/PostCard";
 import Announcement from "./Announcement/Announcement";
 import Banner from "./Banner/Banner";
@@ -99,7 +98,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <PostDetails />
     </>
   );
 };
