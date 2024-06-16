@@ -49,9 +49,11 @@ const Navbar = () => {
       <div className="container px-6 py-4 mx-auto">
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="flex items-center justify-between">
-            <a href="#">
-              <img className="w-44 dark:invert" src={navlogowht} alt="" />
-            </a>
+            <Link to={'/'}>
+              <a href="#">
+                <img className="w-44 dark:invert" src={navlogowht} alt="" />
+              </a>
+            </Link>
             {/* Mobile menu button */}
             <div className="flex lg:hidden">
               <button
@@ -134,7 +136,7 @@ const Navbar = () => {
                   >
                     <li>
                       <p className="justify-between text-gray-500 dark:text-gray-400 ">
-                        Profile
+                        {user?.displayName}
                         <span className="badge">New</span>
                       </p>
                     </li>

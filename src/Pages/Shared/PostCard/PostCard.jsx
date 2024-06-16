@@ -2,8 +2,13 @@ import PropTypes from "prop-types";
 import { SlLike, SlDislike } from "react-icons/sl";
 import { GoCommentDiscussion } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const PostCard = ({ post }) => {
+
+  const [comments, setComments] = useState([]);
+
   const {
     _id,
     post_title,
@@ -14,6 +19,21 @@ const PostCard = ({ post }) => {
     upvote,
     downvote,
   } = post;
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/comments/${_id}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [_id]);
+
+  
   return (
     <div className="w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
       <div className="flex items-center justify-between">
@@ -44,7 +64,7 @@ const PostCard = ({ post }) => {
       <div className="flex items-center justify-between mt-4 ">
         <div className="flex gap-4">
           <div className="flex gap-1 justify-center items-center text-gray-800 dark:text-white">
-            <GoCommentDiscussion /> <span>comments Count</span>
+            <GoCommentDiscussion /> <span>{comments.length}</span>
           </div>
           <div className="flex gap-1 justify-center items-center text-blue-400">
             <SlLike /> <span>{upvote}</span>
