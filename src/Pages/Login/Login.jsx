@@ -6,8 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Providers/AuthProviders";
 import app from "../../firebase/firebase.config";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
+  const axiosPublic = useAxiosPublic();
   const successToast = () => toast.success("User Logged In Successfully");
   const errorToast = () => toast.error("User log in Unsuccessful !");
   const [registerError, setRegisterError] = useState("");
@@ -67,7 +69,17 @@ const Login = () => {
     setRegisterError("");
     setSuccess("");
     signInWithPopup(auth, googleProvider)
-      .then(() => {
+      .then( result => {
+        console.log(result.user);
+        const userInfo ={
+          name:result.user?.displayName,
+          email:result.user?.email,
+          password:'gmail-password',
+          photoURL:result.user?.photoURL
+        }
+        axiosPublic.post('/users',userInfo).then(res=>{
+          console.log(res.data);
+        })
         successToast();
         setSuccess("User Logged In Successfully");
       })
@@ -76,7 +88,6 @@ const Login = () => {
         errorToast("User Login Unsuccessful !");
       });
   };
-
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-screen">

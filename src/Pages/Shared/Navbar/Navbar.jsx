@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import navlogowht from "../../../assets/logowhite.png";
 import DarkMode from "../DarkMode/DarkMode";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaRegBell } from "react-icons/fa";
 import { AuthContext } from "../../../Providers/AuthProviders";
 import { toast } from "react-toastify";
@@ -23,22 +23,22 @@ const Navbar = () => {
   const navOptions = (
     <>
       <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
-        <Link to={"/"}>
+        <NavLink to={"/"}>
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Home
           </div>
-        </Link>
-        <Link to={"/membership"}>
+        </NavLink>
+        <NavLink to={"/membership"}>
           <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
             Membership
           </div>
-        </Link>
+        </NavLink>
         {user ? undefined : (
-          <Link to={"/login"}>
+          <NavLink to={"/login"}>
             <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
               Join US
             </div>
-          </Link>
+          </NavLink>
         )}
       </div>
     </>
@@ -49,11 +49,11 @@ const Navbar = () => {
       <div className="container px-6 py-4 mx-auto">
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="flex items-center justify-between">
-            <Link to={'/'}>
+            <NavLink to={'/'}>
               <a href="#">
                 <img className="w-44 dark:invert" src={navlogowht} alt="" />
               </a>
-            </Link>
+            </NavLink>
             {/* Mobile menu button */}
             <div className="flex lg:hidden">
               <button
