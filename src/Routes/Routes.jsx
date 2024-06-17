@@ -16,6 +16,7 @@ import ManageUsers from "../Layout/AdminDashboard/ManageUsers/ManageUsers";
 import ReportedActivities from "../Layout/AdminDashboard/ReportedActivities/ReportedActivities";
 import PostDetails from "../Pages/PostDetails/PostDetails";
 import PostComment from "../Pages/PostComment/PostComment";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -42,30 +43,40 @@ export const router = createBrowserRouter([
       {
         path: "/post-details/:id",
         element: <PostDetails></PostDetails>,
-        loader : ({params}) => fetch(`${import.meta.env.VITE_API_URL}/posts/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/posts/${params.id}`),
       },
       {
         path: "/post-comments/:id",
         element: <PostComment></PostComment>,
-        loader : ({params}) => fetch(`${import.meta.env.VITE_API_URL}/comments/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/comments/${params.id}`),
       },
     ],
   },
   {
     path: "user-dashboard",
-    element: <UserDashboard></UserDashboard>,
+    element: (
+      <PrivateRoutes>
+        <UserDashboard></UserDashboard>
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "add-post",
-        element: <AddPost></AddPost>,
+        element: (
+          <PrivateRoutes>
+            <AddPost></AddPost>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "my-posts",
-        element: <MyPost></MyPost>,
+        element:<PrivateRoutes> <MyPost></MyPost></PrivateRoutes>,
       },
       {
         path: "my-profile",
-        element: <MyProfile></MyProfile>,
+        element:<PrivateRoutes> <MyProfile></MyProfile></PrivateRoutes>,
       },
     ],
   },

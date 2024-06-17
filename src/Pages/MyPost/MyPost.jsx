@@ -31,7 +31,7 @@ const MyPost = () => {
         if (response.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
-            text: "Item has been deleted.",
+            text: "Post has been deleted.",
             icon: "success",
           });
           queryClient.invalidateQueries("myPosts");

@@ -3,8 +3,10 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { useNavigate } from "react-router-dom";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const successToast = () => toast.success("User created Successfully");
   const errorToast = () => toast.error("User creation Unsuccessful !");
   const passErrorToast = (toastText) => toast.error(toastText);
@@ -49,8 +51,20 @@ const Register = () => {
     createUser(email, password, name, photoURL)
       .then(() => {
         try {
-          setSuccess("User created successfully");
-          successToast();
+          // create user entry in the database
+          const userInfo = {
+            name: name,
+            email: email,
+            password:password,
+            photoURL: photoURL,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user added to database');
+              setSuccess("User created successfully");
+              successToast();
+            }
+          });
         } catch (error) {
           setRegisterError(error.message);
           errorToast("User creation unsuccessful!");
@@ -92,8 +106,8 @@ const Register = () => {
                   Name
                 </label>
                 <input
-                required
-                id="name"
+                  required
+                  id="name"
                   name="name"
                   type="text"
                   placeholder="John Snow"
@@ -103,11 +117,11 @@ const Register = () => {
 
               <div>
                 <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                photoURL
+                  photoURL
                 </label>
                 <input
-                required
-                id="photoURL"
+                  required
+                  id="photoURL"
                   name="photoURL"
                   type="text"
                   placeholder="imgbb.com/john-snow.jpg"
@@ -120,8 +134,8 @@ const Register = () => {
                   Email address
                 </label>
                 <input
-                required
-                id="email"
+                  required
+                  id="email"
                   name="email"
                   type="email"
                   placeholder="johnsnow@example.com"
@@ -134,8 +148,8 @@ const Register = () => {
                   Password
                 </label>
                 <input
-                required
-                id="password"
+                  required
+                  id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
