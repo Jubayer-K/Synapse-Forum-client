@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { GoHome } from "react-icons/go";
@@ -7,8 +7,10 @@ import { MdOutlineReport } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { Flip, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const AdminDashboard = () => {
+  const { user } = useContext(AuthContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
 
@@ -46,14 +48,14 @@ const AdminDashboard = () => {
           <div className="flex flex-col items-center mt-6 -mx-2">
             <img
               className="object-cover w-24 h-24 mx-2 rounded-full"
-              src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+              src={user.photoURL}
               alt="avatar"
             />
             <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">
-              John Doe
+            {user.displayName}
             </h4>
             <p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
-              john@example.com
+            {user.email}
             </p>
           </div>
 

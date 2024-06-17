@@ -72,33 +72,66 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-posts",
-        element:<PrivateRoutes> <MyPost></MyPost></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            {" "}
+            <MyPost></MyPost>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "my-profile",
-        element:<PrivateRoutes> <MyProfile></MyProfile></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            {" "}
+            <MyProfile></MyProfile>
+          </PrivateRoutes>
+        ),
       },
     ],
   },
   {
     path: "admin-dashboard",
-    element: <AdminDashboard></AdminDashboard>,
+    element: (
+      <PrivateRoutes>
+        {" "}
+        <AdminDashboard></AdminDashboard>
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "users",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <PrivateRoutes>
+            {" "}
+            <ManageUsers></ManageUsers>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "report",
-        element: <ReportedActivities></ReportedActivities>,
+        element: (
+          <PrivateRoutes>
+            <ReportedActivities></ReportedActivities>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "announcement",
-        element: <Announcement></Announcement>,
+        element: (
+          <PrivateRoutes>
+            {" "}
+            <Announcement></Announcement>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "admin-profile",
-        element: <AdminProfile></AdminProfile>,
+        element: (
+          <PrivateRoutes>
+            <AdminProfile></AdminProfile>
+          </PrivateRoutes>
+        ),
       },
     ],
   },

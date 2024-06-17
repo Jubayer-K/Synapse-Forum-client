@@ -52,11 +52,15 @@ const Register = () => {
       .then(() => {
         try {
           // create user entry in the database
+          const membership = 'bronze';
+          const role = "user";
           const userInfo = {
             name: name,
             email: email,
             password:password,
             photoURL: photoURL,
+            membership: membership,
+            role: role
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {

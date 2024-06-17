@@ -69,17 +69,20 @@ const Login = () => {
     setRegisterError("");
     setSuccess("");
     signInWithPopup(auth, googleProvider)
-      .then( result => {
-        console.log(result.user);
-        const userInfo ={
-          name:result.user?.displayName,
-          email:result.user?.email,
-          password:'gmail-password',
-          photoURL:result.user?.photoURL
-        }
-        axiosPublic.post('/users',userInfo).then(res=>{
+      .then((result) => {
+        const membership = "bronze";
+        const role = "user";
+        const userInfo = {
+          name: result.user?.displayName,
+          email: result.user?.email,
+          password: "gmail-password",
+          photoURL: result.user?.photoURL,
+          membership: membership,
+          role: role,
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
           console.log(res.data);
-        })
+        });
         successToast();
         setSuccess("User Logged In Successfully");
       })

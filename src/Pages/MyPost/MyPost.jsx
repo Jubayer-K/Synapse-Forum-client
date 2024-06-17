@@ -66,7 +66,7 @@ const MyPost = () => {
       console.log("Fetched posts:", response.data); // Log fetched posts
       return response.data;
     } catch (error) {
-      throw new Error("Error fetching featured blogs");
+      throw new Error("Error fetching Posts");
     }
   }
 
