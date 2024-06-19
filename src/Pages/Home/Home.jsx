@@ -1,35 +1,30 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import PostCard from "../Shared/PostCard/PostCard";
 import Announcement from "./Announcement/Announcement";
 import Banner from "./Banner/Banner";
 import LoadingSkeleton from '../Shared/LoadingSkeleton/LoadingSkeleton';
 
+const fetchPosts = async ({ queryKey }) => {
+  const [, page] = queryKey;
+  const response = await axios.get(`${import.meta.env.VITE_API_URL}/posts?page=${page}&limit=${5}`);
+  return response.data;
+};
+
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const postsPerPage = 5;
   const topRef = useRef(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/posts?page=${currentPage}&limit=${postsPerPage}`);
-        setPosts(response.data.posts);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['posts', currentPage],
+    queryFn: fetchPosts,
+    keepPreviousData: true,
+  });
 
-    fetchPosts();
-  }, [currentPage]);
+  const posts = data?.posts || [];
+  const totalPages = data?.totalPages || 0;
 
   const handleButtonClick = (event, page) => {
     event.preventDefault();
@@ -47,15 +42,19 @@ const Home = () => {
     post.tag.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) {
+  if (isLoading) {
     return <LoadingSkeleton />;
+  }
+
+  if (isError) {
+    return <div>Error loading posts</div>;
   }
 
   return (
     <>
       <div ref={topRef}>
         <Announcement />
-      <Banner searchTerm={searchTerm} onSearchChange={handleSearchChange} />
+        <Banner searchTerm={searchTerm} onSearchChange={handleSearchChange} />
       </div>
       <div className="max-w-screen-2xl mx-auto">
         <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const PostCard = ({ post }) => {
-
   const [comments, setComments] = useState([]);
 
   const {
@@ -33,35 +32,27 @@ const PostCard = ({ post }) => {
     fetchComments();
   }, [_id]);
 
-  
   return (
     <div className="w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
       <div className="flex items-center justify-between">
         <span className="text-sm font-light text-gray-600 dark:text-gray-400">
           {new Date(posted_time).toLocaleDateString()}
         </span>
-        <a
+        <span
           className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
           tabIndex="0"
           role="button"
         >
           #{tag}
-        </a>
+        </span>
       </div>
 
       <div className="mt-2">
-        <Link to={`/post-details/${_id}`}>
-          <a
-            href="#"
-            className="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-            tabIndex="0"
-            role="link"
-          >
-            {post_title}
-          </a>
+        <Link to={`/post-details/${_id}`} className="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">
+          {post_title}
         </Link>
       </div>
-      <div className="flex items-center justify-between mt-4 ">
+      <div className="flex items-center justify-between mt-4">
         <div className="flex gap-4">
           <div className="flex gap-1 justify-center items-center text-gray-800 dark:text-white">
             <GoCommentDiscussion /> <span>{comments.length}</span>
@@ -80,13 +71,13 @@ const PostCard = ({ post }) => {
             src={author_image}
             alt="avatar"
           />
-          <a
+          <span
             className="font-bold text-gray-700 cursor-pointer dark:text-gray-200"
             tabIndex="0"
             role="link"
           >
             {author_name}
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -95,14 +86,13 @@ const PostCard = ({ post }) => {
 
 PostCard.propTypes = {
   post: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     post_title: PropTypes.string.isRequired,
-    post_description: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
     author_name: PropTypes.string.isRequired,
     author_image: PropTypes.string.isRequired,
+    posted_time: PropTypes.string.isRequired,
     upvote: PropTypes.number.isRequired,
-    _id: PropTypes.number.isRequired,
-    posted_time: PropTypes.number.isRequired,
     downvote: PropTypes.number.isRequired,
   }).isRequired,
 };

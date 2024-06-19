@@ -17,6 +17,7 @@ import ReportedActivities from "../Layout/AdminDashboard/ReportedActivities/Repo
 import PostDetails from "../Pages/PostDetails/PostDetails";
 import PostComment from "../Pages/PostComment/PostComment";
 import PrivateRoutes from "./PrivateRoutes";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/membership",
-        element: <Membership></Membership>,
+        element: (
+          <PrivateRoutes>
+            <Membership></Membership>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/login",
@@ -93,44 +98,44 @@ export const router = createBrowserRouter([
   {
     path: "admin-dashboard",
     element: (
-      <PrivateRoutes>
+      <AdminRoute>
         {" "}
         <AdminDashboard></AdminDashboard>
-      </PrivateRoutes>
+      </AdminRoute>
     ),
     children: [
       {
         path: "users",
         element: (
-          <PrivateRoutes>
+          <AdminRoute>
             {" "}
             <ManageUsers></ManageUsers>
-          </PrivateRoutes>
+          </AdminRoute>
         ),
       },
       {
         path: "report",
         element: (
-          <PrivateRoutes>
+          <AdminRoute>
             <ReportedActivities></ReportedActivities>
-          </PrivateRoutes>
+          </AdminRoute>
         ),
       },
       {
         path: "announcement",
         element: (
-          <PrivateRoutes>
+          <AdminRoute>
             {" "}
             <Announcement></Announcement>
-          </PrivateRoutes>
+          </AdminRoute>
         ),
       },
       {
         path: "admin-profile",
         element: (
-          <PrivateRoutes>
+          <AdminRoute>
             <AdminProfile></AdminProfile>
-          </PrivateRoutes>
+          </AdminRoute>
         ),
       },
     ],

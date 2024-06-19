@@ -79,7 +79,7 @@ const Banner = ({ searchTerm, onSearchChange }) => {
                   className="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0"
                 />
 
-                <button className="btn dark:text-white">Search</button>
+                <button className="btn btn-disabled dark:text-white">Search</button>
               </form>
             </div>
             <p className="text-sm my-2 text-gray-400">

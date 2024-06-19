@@ -7,10 +7,16 @@ import { AuthContext } from "../../../Providers/AuthProviders";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useIsAdmin from "../../../hooks/useIsAdmin";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
+
+  const { isAdmin } = useIsAdmin();
+
+
   const { data: announcements = [] } = useQuery({
     queryKey: ["announcements"],
     queryFn: async () => {
@@ -19,9 +25,8 @@ const Navbar = () => {
     },
   });
 
-  const { user, logOut } = useContext(AuthContext);
-  const logOutToast = () =>
-    toast.success(` ${user.displayName} has been logged out`);
+  const logOutToast = () => toast.success(` ${user.displayName} has been logged out`);
+
   const handleLogOut = () => {
     logOut()
       .then(async () => {
@@ -43,7 +48,7 @@ const Navbar = () => {
             Membership
           </div>
         </NavLink>
-        {user ? undefined : (
+        {!user && (
           <NavLink to={"/login"}>
             <div className="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
               Join US
@@ -60,9 +65,7 @@ const Navbar = () => {
         <div className="lg:flex lg:items-center lg:justify-between">
           <div className="flex items-center justify-between">
             <NavLink to={"/"}>
-              <a href="#">
-                <img className="w-44 dark:invert" src={navlogowht} alt="" />
-              </a>
+              <img className="w-44 dark:invert" src={navlogowht} alt="" />
             </NavLink>
             {/* Mobile menu button */}
             <div className="flex lg:hidden">
@@ -110,15 +113,13 @@ const Navbar = () => {
           {/* Mobile Menu */}
           <div
             className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center ${
-              isOpen
-                ? "translate-x-0 opacity-100"
-                : "opacity-0 -translate-x-full"
+              isOpen ? "translate-x-0 opacity-100" : "opacity-0 -translate-x-full"
             }`}
           >
             {navOptions}
-            <DarkMode></DarkMode>
+            <DarkMode />
             <div className="flex items-center mt-4 lg:mt-0">
-              {announcements.length > 0 ? (
+              {announcements.length > 0 && (
                 <div className="indicator relative">
                   <span className="indicator-item lg:block text-center absolute bottom-5 right-2 items-center badge bg-gray-100 text-blue-400 border-none">
                     {announcements.length}
@@ -127,11 +128,11 @@ const Navbar = () => {
                     className="hidden mx-4 text-gray-600 text-xl transition-colors duration-300 transform lg:block dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 focus:text-gray-700 dark:focus:text-gray-400 focus:outline-none"
                     aria-label="show notifications"
                   >
-                    <FaRegBell></FaRegBell>
+                    <FaRegBell />
                   </button>
                 </div>
-              ) : undefined}
-              {user ? (
+              )}
+              {user && (
                 <div className="dropdown dropdown-start lg:dropdown-end">
                   <div
                     tabIndex={0}
@@ -139,7 +140,7 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img alt="user image" src={user?.photoURL} />
+                      <img alt="user" src={user?.photoURL} />
                     </div>
                   </div>
                   <ul
@@ -147,7 +148,7 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white dark:bg-slate-500 dark:text-white rounded-box w-52"
                   >
                     <li>
-                      <p className="justify-between text-gray-500 dark:text-gray-400 ">
+                      <p className="justify-between text-gray-500 dark:text-gray-400">
                         {user?.displayName}
                         <span className="badge">New</span>
                       </p>
@@ -157,22 +158,21 @@ const Navbar = () => {
                         <p className="hover:text-blue-400">Dashboard</p>
                       </Link>
                     </li>
+                    {isAdmin && (
+                      <li>
+                        <Link to={"/admin-dashboard/admin-profile"}>
+                          <p className="hover:text-blue-400">Admin Dashboard</p>
+                        </Link>
+                      </li>
+                    )}
                     <li>
-                      <Link to={"/admin-dashboard/admin-profile"}>
-                        <p className="hover:text-blue-400">Admin Dashboard</p>
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogOut}
-                        className="hover:text-blue-400"
-                      >
+                      <button onClick={handleLogOut} className="hover:text-blue-400">
                         Logout
                       </button>
                     </li>
                   </ul>
                 </div>
-              ) : undefined}
+              )}
             </div>
           </div>
         </div>

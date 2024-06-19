@@ -79,7 +79,6 @@ const ManageUsers = () => {
 
   return (
     <>
-      <div> Total users: {users.length} </div>
       <MUIDataTable data={users} columns={columns} options={options} />
     </>
   );
