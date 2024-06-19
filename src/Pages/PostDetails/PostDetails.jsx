@@ -27,6 +27,7 @@ const PostDetails = () => {
 
   const [upvotes, setUpvotes] = useState(upvote);
   const [downvotes, setDownvotes] = useState(downvote);
+  const [userVote, setUserVote] = useState(null); // null, "upvote", or "downvote"
 
   const formatDateTime = (isoString) => {
     const date = new Date(isoString);
@@ -90,8 +91,19 @@ const PostDetails = () => {
 
   const handleUpvote = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/upvote`);
-      setUpvotes(upvotes + 1);
+      if (userVote === "upvote") {
+        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`);
+        setUpvotes(upvotes - 1);
+        setUserVote(null);
+      } else {
+        if (userVote === "downvote") {
+          await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`);
+          setDownvotes(downvotes - 1);
+        }
+        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/upvote`);
+        setUpvotes(upvotes + 1);
+        setUserVote("upvote");
+      }
     } catch (error) {
       console.error("Error upvoting post:", error);
     }
@@ -99,8 +111,19 @@ const PostDetails = () => {
 
   const handleDownvote = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/downvote`);
-      setDownvotes(downvotes + 1);
+      if (userVote === "downvote") {
+        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`);
+        setDownvotes(downvotes - 1);
+        setUserVote(null);
+      } else {
+        if (userVote === "upvote") {
+          await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`);
+          setUpvotes(upvotes - 1);
+        }
+        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/downvote`);
+        setDownvotes(downvotes + 1);
+        setUserVote("downvote");
+      }
     } catch (error) {
       console.error("Error downvoting post:", error);
     }
@@ -143,7 +166,11 @@ const PostDetails = () => {
             </button>
             {user ? (
               <button
-                className="flex gap-1 justify-center items-center text-blue-400 hover:text-blue-700"
+                className={`flex gap-1 justify-center items-center ${
+                  userVote === "upvote"
+                    ? "text-blue-700"
+                    : "text-blue-400 hover:text-blue-700"
+                }`}
                 onClick={handleUpvote}
               >
                 <SlLike /> <span>{upvotes}</span>
@@ -155,7 +182,11 @@ const PostDetails = () => {
             )}
             {user ? (
               <button
-                className="flex gap-1 justify-center items-center text-red-600 hover:text-red-800"
+                className={`flex gap-1 justify-center items-center ${
+                  userVote === "downvote"
+                    ? "text-red-800"
+                    : "text-red-600 hover:text-red-800"
+                }`}
                 onClick={handleDownvote}
               >
                 <SlDislike /> <span>{downvotes}</span>
