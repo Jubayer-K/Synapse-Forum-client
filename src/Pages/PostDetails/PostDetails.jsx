@@ -6,9 +6,7 @@ import { FaRegShareSquare } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { toast } from "react-toastify";
-import {
-  FacebookShareButton,
-} from "react-share";
+import { FacebookShareButton } from "react-share";
 
 const PostDetails = () => {
   const { user } = useContext(AuthContext);
@@ -192,7 +190,12 @@ const PostDetails = () => {
                 required
               ></textarea>
             </div>
-            <button type="submit">Post comment</button>
+            <button
+              type="submit"
+              className="w-full btn mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            >
+              Post comment
+            </button>
           </form>
         </div>
       </div>

@@ -2,26 +2,29 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
 import PostCard from "../Shared/PostCard/PostCard";
+import { LuBadgeCheck } from "react-icons/lu";
+import useMembership from "../../hooks/useMembership";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
-    const [posts, setPosts] = useState([]);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_API_URL}/my-post/${user.email}`,
-            { withCredentials: true }
-          );
-          setPosts(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-  
-      fetchData();
-    }, [user]);
+  const [posts, setPosts] = useState([]);
+  const { isMember } = useMembership();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/my-post/${user.email}`,
+          { withCredentials: true }
+        );
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [user]);
   return (
     <>
       <div>
@@ -32,14 +35,22 @@ const MyProfile = () => {
             alt="Profile Picture"
           />
           <h1 className="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">
-          {user?.displayName}
+            {user?.displayName}
           </h1>
           <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
-          {user?.email}
+            {user?.email}
           </p>
-            <div>
-                Badge
+          {isMember ? (
+            <div className="flex items-center flex-col justify-center">
+              <LuBadgeCheck className="text-8xl text-yellow-400 drop-shadow-md shadow-black text-center"></LuBadgeCheck>
+              <p className="text-center font-semibold">Gold Member</p>
             </div>
+          ) : (
+            <div className="flex items-center flex-col justify-center">
+              <LuBadgeCheck className="text-8xl text-yellow-800 drop-shadow-md shadow-black text-center"></LuBadgeCheck>
+              <p className="text-center font-semibold">Bronze Member</p>
+            </div>
+          )}
         </div>
         <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
           Recent <span className="text-blue-500 ">Posts</span>

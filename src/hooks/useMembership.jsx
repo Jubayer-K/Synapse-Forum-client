@@ -3,24 +3,28 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../Providers/AuthProviders";
 import useAxiosSecure from "./useAxiosSecure";
 
-const useIsAdmin = () => {
+const useMembership = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
 
-  const { data: roleData, isLoading, isError } = useQuery({
-    queryKey: ["admin-user", user?.email],
+  const {
+    data: membershipData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["user-membership", user?.email],
     queryFn: async () => {
       if (user?.email) {
-        const res = await axiosSecure.get(`/admin-user/${user.email}`);
+        const res = await axiosSecure.get(`/user/${user.email}`);
         return res.data;
       }
       return null;
     },
     enabled: !!user?.email,
   });
-  const isAdmin = roleData?.role === "admin";
+  const isMember = membershipData?.membership === "gold";
 
-  return { isAdmin, isLoading, isError };
+  return { isMember, isLoading, isError };
 };
 
-export default useIsAdmin;
+export default useMembership;

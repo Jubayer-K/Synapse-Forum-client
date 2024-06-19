@@ -18,6 +18,7 @@ import PostDetails from "../Pages/PostDetails/PostDetails";
 import PostComment from "../Pages/PostComment/PostComment";
 import PrivateRoutes from "./PrivateRoutes";
 import AdminRoute from "./AdminRoute";
+import Payment from "../Pages/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <Membership></Membership>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/payment",
+        element: (
+          <PrivateRoutes>
+            <Payment></Payment>
           </PrivateRoutes>
         ),
       },
