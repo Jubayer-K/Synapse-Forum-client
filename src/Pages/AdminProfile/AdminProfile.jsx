@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
 
 const AdminProfile = () => {
   const { user } = useContext(AuthContext);
 
   const axiosSecure = useAxiosSecure();
-  const { data: stats = [] } = useQuery({
+  const { data: stats = {} } = useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin-stats");
@@ -16,6 +17,33 @@ const AdminProfile = () => {
   });
 
   console.log(stats);
+
+  const pieChartData = [
+    { name: "Posts", value: stats.allPosts || 0 },
+    { name: "Comments", value: stats.allComments || 0 },
+    { name: "Users", value: stats.users || 0 },
+  ];
+
+  const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
+
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = 25 + innerRadius + (outerRadius - innerRadius);
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill={COLORS[index % COLORS.length]}
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${pieChartData[index].name} (${(percent * 100).toFixed(0)}%)`}
+      </text>
+    );
+  };
 
   return (
     <>
@@ -62,7 +90,7 @@ const AdminProfile = () => {
             </p>
           </div>
         </div>
-        <div className="w-full  bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
+        <div className="w-full bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
           <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
             Users
           </h3>
@@ -72,6 +100,27 @@ const AdminProfile = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="w-full flex justify-center my-8">
+        <PieChart width={500} height={500}>
+          <Pie
+            data={pieChartData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={150}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {pieChartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value, name) => [`${value}`, `${name} (${((value / pieChartData.reduce((sum, entry) => sum + entry.value, 0)) * 100).toFixed(2)}%)`]} />
+          <Legend />
+        </PieChart>
       </div>
     </>
   );
