@@ -1,8 +1,22 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AdminProfile = () => {
   const { user } = useContext(AuthContext);
+
+  const axiosSecure = useAxiosSecure();
+  const { data: stats = [] } = useQuery({
+    queryKey: ["stats"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/admin-stats");
+      return res.data;
+    },
+  });
+
+  console.log(stats);
+
   return (
     <>
       <div>
@@ -18,14 +32,45 @@ const AdminProfile = () => {
           <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
             {user.email}
           </p>
-            <p className="mt-2 text-gray-700 capitalize dark:text-gray-300 group-hover:text-gray-300">
-                admin
-            </p>
+          <p className="mt-2 text-gray-700 capitalize dark:text-gray-300 group-hover:text-gray-300">
+            admin
+          </p>
         </div>
         <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
-          Recent <span className="text-blue-500 ">Posts</span>
+          All <span className="text-blue-500 ">Stats</span>
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+      <div className="flex flex-col md:flex-row items-center gap-4 mx-auto justify-center">
+        <div className="w-full bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
+          <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
+            Posts
+          </h3>
+          <div className="flex items-center justify-center px-3 py-2 bg-gray-200 dark:bg-gray-700">
+            <p className="font-bold text-center text-gray-800 dark:text-gray-200">
+              {stats.allPosts}
+            </p>
+          </div>
+        </div>
+        <div className="w-full bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
+          <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
+            Comments
+          </h3>
+          <div className="flex items-center justify-center px-3 py-2 bg-gray-200 dark:bg-gray-700">
+            <p className="font-bold text-center text-gray-800 dark:text-gray-200">
+              {stats.allComments}
+            </p>
+          </div>
+        </div>
+        <div className="w-full  bg-white rounded-lg shadow-lg md:w-64 dark:bg-gray-800">
+          <h3 className="py-2 font-bold tracking-wide text-center text-gray-800 uppercase dark:text-white">
+            Users
+          </h3>
+          <div className="flex items-center justify-center px-3 py-2 bg-gray-200 dark:bg-gray-700">
+            <p className="font-bold text-center text-gray-800 dark:text-gray-200">
+              {stats.users}
+            </p>
+          </div>
         </div>
       </div>
     </>

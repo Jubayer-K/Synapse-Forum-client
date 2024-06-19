@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useIsAdmin from "../../../hooks/useIsAdmin";
+import useMembership from "../../../hooks/useMembership";
+import { LuBadgeCheck } from "react-icons/lu";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -15,6 +17,7 @@ const Navbar = () => {
   const axiosSecure = useAxiosSecure();
 
   const { isAdmin } = useIsAdmin();
+  const { isMember } = useMembership();
 
 
   const { data: announcements = [] } = useQuery({
@@ -150,7 +153,7 @@ const Navbar = () => {
                     <li>
                       <p className="justify-between text-gray-500 dark:text-gray-400">
                         {user?.displayName}
-                        <span className="badge">New</span>
+                        {isMember?<span className="flex items-center gap-1 text-yellow-500 "><LuBadgeCheck />Gold</span>:<span className="flex items-center gap-1 text-yellow-900 "> <LuBadgeCheck />Bronze</span>}
                       </p>
                     </li>
                     <li>
