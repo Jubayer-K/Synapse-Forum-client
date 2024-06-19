@@ -141,18 +141,31 @@ const PostDetails = () => {
               <span>Comment</span>
               <GoCommentDiscussion /> <span>{comments.length}</span>
             </button>
-            <button
-              className="flex gap-1 justify-center items-center text-blue-400 hover:text-blue-700"
-              onClick={handleUpvote}
-            >
-              <SlLike /> <span>{upvotes}</span>
-            </button>
-            <button
-              className="flex gap-1 justify-center items-center text-red-600 hover:text-red-800"
-              onClick={handleDownvote}
-            >
-              <SlDislike /> <span>{downvotes}</span>
-            </button>
+            {user ? (
+              <button
+                className="flex gap-1 justify-center items-center text-blue-400 hover:text-blue-700"
+                onClick={handleUpvote}
+              >
+                <SlLike /> <span>{upvotes}</span>
+              </button>
+            ) : (
+              <button className="flex gap-1 justify-center items-center text-blue-400">
+                <SlLike /> <span>{upvotes}</span>
+              </button>
+            )}
+            {user ? (
+              <button
+                className="flex gap-1 justify-center items-center text-red-600 hover:text-red-800"
+                onClick={handleDownvote}
+              >
+                <SlDislike /> <span>{downvotes}</span>
+              </button>
+            ) : (
+              <button className="flex gap-1 justify-center items-center text-red-600">
+                <SlDislike /> <span>{downvotes}</span>
+              </button>
+            )}
+
             <div className="flex gap-1 justify-center items-center">
               <FacebookShareButton url={shareUrl} quote={shareTitle}>
                 <div className="flex items-center gap-1">
@@ -172,33 +185,37 @@ const PostDetails = () => {
       </div>
 
       {/* comment box */}
-      <div className="comment-box mt-6">
-        <div className="max-w-2xl mx-auto px-4">
-          <form className="mb-6" onSubmit={handleComment}>
-            <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-              <label htmlFor="comment" className="sr-only">
-                Your comment
-              </label>
-              <textarea
-                id="comment"
-                name="comment"
-                value={comment}
-                rows="6"
-                className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                placeholder="Write a comment..."
-                onChange={(e) => setComment(e.target.value)}
-                required
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full btn mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-            >
-              Post comment
-            </button>
-          </form>
+      {user ? (
+        <div className="comment-box mt-6">
+          <div className="max-w-2xl mx-auto px-4">
+            <form className="mb-6" onSubmit={handleComment}>
+              <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                <label htmlFor="comment" className="sr-only">
+                  Your comment
+                </label>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  value={comment}
+                  rows="6"
+                  className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                  placeholder="Write a comment..."
+                  onChange={(e) => setComment(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full btn mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+              >
+                Post comment
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className="text-center my-4">Login to comment</p>
+      )}
 
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex justify-between items-center mb-6">

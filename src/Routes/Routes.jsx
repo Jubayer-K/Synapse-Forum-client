@@ -70,6 +70,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "user-dashboard",
+    errorElement: <Error></Error>,
     element: (
       <PrivateRoutes>
         <UserDashboard></UserDashboard>
@@ -106,6 +107,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "admin-dashboard",
+    errorElement: <Error></Error>,
     element: (
       <AdminRoute>
         {" "}
