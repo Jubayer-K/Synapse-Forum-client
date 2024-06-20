@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import MUIDataTable from "mui-datatables";
 import Swal from "sweetalert2";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  
   const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -24,6 +26,7 @@ const ManageUsers = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        queryClient.invalidateQueries(["users"]);
       }
     });
   };

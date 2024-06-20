@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { toast } from "react-toastify";
 
 const AdminProfile = () => {
   const { user } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
   const axiosSecure = useAxiosSecure();
   const { data: stats = {} } = useQuery({
@@ -16,8 +18,6 @@ const AdminProfile = () => {
     },
   });
 
-  console.log(stats);
-
   const pieChartData = [
     { name: "Posts", value: stats.allPosts || 0 },
     { name: "Comments", value: stats.allComments || 0 },
@@ -26,7 +26,15 @@ const AdminProfile = () => {
 
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
     const RADIAN = Math.PI / 180;
     const radius = 25 + innerRadius + (outerRadius - innerRadius);
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -43,6 +51,40 @@ const AdminProfile = () => {
         {`${pieChartData[index].name} (${(percent * 100).toFixed(0)}%)`}
       </text>
     );
+  };
+
+  const handleAddTag = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const tagName = form.tag.value.trim();
+    console.log(tagName);
+
+    if (tagName === "") {
+      toast.error("Tag cannot be empty");
+      return;
+    }
+
+    const newTag = { name: tagName };
+
+    try {
+      const response = await axiosSecure.post("/tags", newTag, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = response.data;
+      if (data.insertedId) {
+        toast.success("Tag Added Successfully");
+        form.reset();
+        queryClient.invalidateQueries("tags"); // Use queryClient to invalidate queries
+      } else {
+        toast.error("Tag Add Unsuccessful");
+      }
+    } catch (error) {
+      console.error("Error adding tag:", error);
+      toast.error("An error occurred while adding the tag");
+    }
   };
 
   return (
@@ -64,6 +106,26 @@ const AdminProfile = () => {
             admin
           </p>
         </div>
+        <div className="w-full flex justify-center my-8">
+        <form onSubmit={handleAddTag} className="w-full max-w-sm">
+          <div className="flex items-center border-b border-teal-500 py-2">
+            <input
+              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              id="tag"
+              name="tag"
+              placeholder="Add a new tag"
+
+            />
+            <button
+              className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+              type="submit"
+            >
+              Add Tag
+            </button>
+          </div>
+        </form>
+      </div>
         <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
           All <span className="text-blue-500 ">Stats</span>
         </h1>
@@ -115,13 +177,27 @@ const AdminProfile = () => {
             dataKey="value"
           >
             {pieChartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
-          <Tooltip formatter={(value, name) => [`${value}`, `${name} (${((value / pieChartData.reduce((sum, entry) => sum + entry.value, 0)) * 100).toFixed(2)}%)`]} />
+          <Tooltip
+            formatter={(value, name) => [
+              `${value}`,
+              `${name} (${(
+                (value /
+                  pieChartData.reduce((sum, entry) => sum + entry.value, 0)) *
+                100
+              ).toFixed(2)}%)`,
+            ]}
+          />
           <Legend />
         </PieChart>
       </div>
+
+     
     </>
   );
 };
