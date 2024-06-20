@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { GoHome } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
 import { MdOutlineReport } from "react-icons/md";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { Flip, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../Providers/AuthProviders";
 
 const AdminDashboard = () => {
@@ -52,45 +52,49 @@ const AdminDashboard = () => {
               alt="avatar"
             />
             <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">
-            {user.displayName}
+              {user.displayName}
             </h4>
             <p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
-            {user.email}
+              {user.email}
             </p>
           </div>
 
           <nav className="mt-10">
             <ul className="dark:text-white">
-              <Link className="w-full" to="/">
-                <li className="flex btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
+              <NavLink to="/">
+                <div className="flex justify-start btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
                   <GoHome />
                   <span className="mx-4 font-medium">Home</span>
-                </li>
-              </Link>
-              <Link className="w-full" to="admin-profile">
-                <li className="flex btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
+                </div>
+              </NavLink>
+
+              <NavLink to="admin-profile">
+                <div className="flex justify-start btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
                   <CgProfile />
                   <span className="mx-4 font-medium">Admin Profile</span>
-                </li>
-              </Link>
-              <Link className="w-full" to="users">
-                <li className="flex btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
+                </div>
+              </NavLink>
+
+              <NavLink to="users">
+                <div className="flex btn justify-start items-center border-none hover:bg-gray-200 dark:hover:text-black">
                   <FaUsers></FaUsers>
                   <span className="mx-4 font-medium">Manage Users</span>
-                </li>
-              </Link>
-              <Link className="w-full" to="report">
-                <li className="flex btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
+                </div>
+              </NavLink>
+
+              <NavLink to="report">
+                <div className="flex justify-start btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
                   <MdOutlineReport></MdOutlineReport>
                   <span className="mx-4 font-medium">Reported Activities</span>
-                </li>
-              </Link>
-              <Link className="w-full" to="announcement">
-                <li className="flex btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
+                </div>
+              </NavLink>
+
+              <NavLink to="announcement">
+                <div className="flex justify-start btn items-center border-none hover:bg-gray-200 dark:hover:text-black">
                   <TfiAnnouncement></TfiAnnouncement>
                   <span className="mx-4 font-medium">Make Announcement</span>
-                </li>
-              </Link>
+                </div>
+              </NavLink>
             </ul>
           </nav>
         </aside>
@@ -132,16 +136,16 @@ const AdminDashboard = () => {
         </div>
       </div>
       <ToastContainer
-          transition={Flip}
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        ></ToastContainer>
+        transition={Flip}
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
     </>
   );
 };

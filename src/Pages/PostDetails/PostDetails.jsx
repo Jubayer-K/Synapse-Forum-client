@@ -64,6 +64,7 @@ const PostDetails = () => {
     const commenterImage = user.photoURL;
     const commenterName = user.displayName;
     const postId = _id;
+    const postTitle = post_title;
 
     const commentData = {
       postId,
@@ -71,6 +72,7 @@ const PostDetails = () => {
       commenterEmail,
       commenterImage,
       comment,
+      postTitle,
     };
 
     try {
@@ -136,7 +138,7 @@ const PostDetails = () => {
     <>
       <div className="w-full max-w-screen-lg mx-auto px-8 py-4 mt-16 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-light text-gray-600 dark:text-gray-400">
+          <span className="text-sm hidden md:block font-light text-gray-600 dark:text-gray-400">
             {formatDateTime(posted_time)}
           </span>
         </div>
@@ -197,13 +199,15 @@ const PostDetails = () => {
               </button>
             )}
 
+
             <div className="flex gap-1 justify-center items-center">
-              <FacebookShareButton url={shareUrl} quote={shareTitle}>
+              {user?<FacebookShareButton url={shareUrl} quote={shareTitle}>
                 <div className="flex items-center gap-1">
                   <FaRegShareSquare />
                   <span>Share</span>
                 </div>
-              </FacebookShareButton>
+              </FacebookShareButton>:<p className="text-center flex gap-1 items-center"><FaRegShareSquare />Login to share</p>}
+              
             </div>
           </div>
         </div>
