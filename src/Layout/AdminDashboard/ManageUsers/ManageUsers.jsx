@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
-  
+
   const { data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -17,7 +17,6 @@ const ManageUsers = () => {
 
   const handleMakeAdmin = (userId) => {
     axiosSecure.patch(`/users/admin/${userId}`).then((res) => {
-      console.log(res.data);
       if (res.data.modifiedCount > 0) {
         Swal.fire({
           position: "top",
@@ -33,6 +32,16 @@ const ManageUsers = () => {
 
   const columns = [
     {
+      name: "photoURL",
+      label: "Profile Picture",
+      options: {
+        customBodyRender: (value) => (
+          <img className="w-10 h-10 rounded-full mx-auto" src={value} alt="" />
+        ),
+        filter: false,
+      },
+    },
+    {
       name: "name",
       label: "User Name",
     },
@@ -44,18 +53,24 @@ const ManageUsers = () => {
       name: "role",
       label: "Role",
     },
+   
     {
       name: "_id",
       label: "Actions",
       options: {
         customBodyRender: (value, tableMeta) => {
-          const userRole = tableMeta.rowData[2];
+          const userRole = tableMeta.rowData[3];
           return userRole !== "admin" ? (
-            <button onClick={() => handleMakeAdmin(value)} className="btn hover:bg-blue-400 hover:text-white">
+            <button
+              onClick={() => handleMakeAdmin(value)}
+              className="btn hover:bg-blue-400 hover:text-white"
+            >
               Make Admin
             </button>
           ) : (
-            <p className="btn bg-green-600 border-none text-white hover:bg-green-400 ">Admin</p>
+            <p className="btn bg-green-600 border-none text-white hover:bg-green-400 ">
+              Admin
+            </p>
           );
         },
         filter: false,
@@ -67,7 +82,11 @@ const ManageUsers = () => {
       options: {
         customBodyRender: (value) => {
           const color = value === "gold" ? "gold" : "brown";
-          return <p className="font-bold btn w-full btn-disabled" style={{ color }}>{value.toUpperCase()}</p>;
+          return (
+            <p className="font-bold btn w-full btn-disabled" style={{ color }}>
+              {value.toUpperCase()}
+            </p>
+          );
         },
         filter: false,
       },
@@ -82,9 +101,9 @@ const ManageUsers = () => {
 
   return (
     <>
-     <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
-          Manage <span className="text-blue-500 ">Users</span>
-        </h1>
+      <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
+        Manage <span className="text-blue-500 ">Users</span>
+      </h1>
       <MUIDataTable data={users} columns={columns} options={options} />
     </>
   );

@@ -57,7 +57,6 @@ const AdminProfile = () => {
     e.preventDefault();
     const form = e.target;
     const tagName = form.tag.value.trim();
-    console.log(tagName);
 
     if (tagName === "") {
       toast.error("Tag cannot be empty");
@@ -165,7 +164,7 @@ const AdminProfile = () => {
       </div>
 
       <div className="w-full hidden md:flex justify-center my-8">
-        <PieChart width={500} height={500}>
+        <PieChart width={1100} height={500}>
           <Pie
             data={pieChartData}
             cx="50%"

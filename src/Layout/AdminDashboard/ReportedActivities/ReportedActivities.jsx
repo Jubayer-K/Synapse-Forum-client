@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Modal from "../../../Pages/Shared/Modal/Modal";
 import { toast } from "react-toastify";
+import { Grid } from "@mui/material";
 
 const ReportedActivities = () => {
   const axiosSecure = useAxiosSecure();
@@ -109,7 +110,9 @@ const ReportedActivities = () => {
           return (
             <>
               <button
-                className="px-2 py-1 mr-2 text-white bg-green-500 rounded hover:bg-green-700"
+                className={`px-2 py-1 mr-2 text-white rounded ${
+                  report.resolved ? "bg-gray-500 hover:bg-gray-700" : "bg-green-500 hover:bg-green-700"
+                }`}
                 onClick={() => handleResolve(report._id)}
                 disabled={report.resolved}
               >
@@ -134,14 +137,18 @@ const ReportedActivities = () => {
     selectableRows: "none",
     download: false,
     print: false,
+    responsive: "standard",
+    tableBodyHeight: "100%",
   };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
-    <>
-      <MUIDataTable data={reports} columns={columns} options={options} />
+    <Grid container justifyContent="center" className="responsive-container">
+      <Grid item xs={12}>
+        <MUIDataTable data={reports} columns={columns} options={options} />
+      </Grid>
       <Modal isOpen={modalOpen} onClose={closeModal}>
         <h2>Report Details</h2>
         <p>
@@ -154,7 +161,7 @@ const ReportedActivities = () => {
           <strong>Comment:</strong> {selectedComment}
         </p>
       </Modal>
-    </>
+    </Grid>
   );
 };
 

@@ -94,12 +94,16 @@ const PostDetails = () => {
   const handleUpvote = async () => {
     try {
       if (userVote === "upvote") {
-        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`
+        );
         setUpvotes(upvotes - 1);
         setUserVote(null);
       } else {
         if (userVote === "downvote") {
-          await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`);
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`
+          );
           setDownvotes(downvotes - 1);
         }
         await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/upvote`);
@@ -114,15 +118,21 @@ const PostDetails = () => {
   const handleDownvote = async () => {
     try {
       if (userVote === "downvote") {
-        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/posts/${_id}/remove-downvote`
+        );
         setDownvotes(downvotes - 1);
         setUserVote(null);
       } else {
         if (userVote === "upvote") {
-          await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`);
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/posts/${_id}/remove-upvote`
+          );
           setUpvotes(upvotes - 1);
         }
-        await axios.post(`${import.meta.env.VITE_API_URL}/posts/${_id}/downvote`);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/posts/${_id}/downvote`
+        );
         setDownvotes(downvotes + 1);
         setUserVote("downvote");
       }
@@ -199,15 +209,20 @@ const PostDetails = () => {
               </button>
             )}
 
-
             <div className="flex gap-1 justify-center items-center">
-              {user?<FacebookShareButton url={shareUrl} quote={shareTitle}>
-                <div className="flex items-center gap-1">
+              {user ? (
+                <FacebookShareButton url={shareUrl} quote={shareTitle}>
+                  <div className="flex items-center gap-1">
+                    <FaRegShareSquare />
+                    <span>Share</span>
+                  </div>
+                </FacebookShareButton>
+              ) : (
+                <p className="text-center flex gap-1 items-center">
                   <FaRegShareSquare />
-                  <span>Share</span>
-                </div>
-              </FacebookShareButton>:<p className="text-center flex gap-1 items-center"><FaRegShareSquare />Login to share</p>}
-              
+                  Login to share
+                </p>
+              )}
             </div>
           </div>
         </div>

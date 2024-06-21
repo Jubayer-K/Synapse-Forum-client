@@ -27,7 +27,6 @@ const MyPost = () => {
         const response = await axios.delete(
           `${import.meta.env.VITE_API_URL}/posts/${_id}`
         );
-        console.log("Delete response:", response.data);
         if (response.data.deletedCount > 0) {
           Swal.fire({
             title: "Deleted!",
@@ -35,7 +34,6 @@ const MyPost = () => {
             icon: "success",
           });
           queryClient.invalidateQueries("myPosts");
-          console.log("Query invalidated");
         }
       } catch (error) {
         console.error("Error deleting item:", error);
@@ -63,7 +61,6 @@ const MyPost = () => {
         `${import.meta.env.VITE_API_URL}/my-post/${user.email}`,
         { withCredentials: true }
       );
-      console.log("Fetched posts:", response.data); // Log fetched posts
       return response.data;
     } catch (error) {
       throw new Error("Error fetching Posts");
@@ -81,7 +78,7 @@ const MyPost = () => {
     },
     {
       name: "author_name",
-      label: "Blog owner",
+      label: "Post owner",
       options: {
         customBodyRender: (value) => <p>{value}</p>,
       },
@@ -120,7 +117,7 @@ const MyPost = () => {
 
   if (isLoading) return <LoadingSkeleton />;
 
-  if (isError) return <p>Error fetching blogs.</p>;
+  if (isError) return <p>Error fetching posts.</p>;
 
   return (
     <>

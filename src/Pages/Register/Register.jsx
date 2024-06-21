@@ -64,7 +64,6 @@ const Register = () => {
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              console.log('user added to database');
               setSuccess("User created successfully");
               successToast();
             }

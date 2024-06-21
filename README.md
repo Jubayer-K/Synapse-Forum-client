@@ -6,7 +6,7 @@ Welcome to the Synapse Forum! This website allows forum administrators to manage
 
 - **Email:** admin@admin.com
 - **Password:** 12345678Ab!
-- **Live Site URL:** [Synapse Forum](https://synapse-forum-admin.com)
+- **Live Site URL:** [Synapse Forum](https://twelfth-assignment-forum.web.app)
 
 ## Features
 
