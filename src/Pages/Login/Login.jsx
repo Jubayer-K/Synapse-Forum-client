@@ -80,8 +80,7 @@ const Login = () => {
           membership: membership,
           role: role,
         };
-        axiosPublic.post("/users", userInfo).then((res) => {
-          console.log(res.data);
+        axiosPublic.post("/users", userInfo).then(() => {
         });
         successToast();
         setSuccess("User Logged In Successfully");

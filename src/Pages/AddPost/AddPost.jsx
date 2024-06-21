@@ -33,7 +33,6 @@ const AddPost = () => {
     queryFn: fetchTags,
   });
 
-  console.log(tags);
 
   const {
     data: posts,
@@ -123,6 +122,9 @@ const AddPost = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto my-10">
+      <h1 className="text-2xl my-6 mt-9 font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
+          Add <span className="text-blue-500">Posts</span>
+        </h1>
       <form onSubmit={handleAddPost}>
         <div className="border-b border-gray-900/10 pb-12">
           <div className="flex flex-col gap-4">

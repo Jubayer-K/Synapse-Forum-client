@@ -1,16 +1,18 @@
-import { useState, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import PostCard from '../Shared/PostCard/PostCard';
-import Announcement from './Announcement/Announcement';
-import Banner from './Banner/Banner';
-import LoadingSkeleton from '../Shared/LoadingSkeleton/LoadingSkeleton';
+import { useState, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import PostCard from "../Shared/PostCard/PostCard";
+import Announcement from "./Announcement/Announcement";
+import Banner from "./Banner/Banner";
+import LoadingSkeleton from "../Shared/LoadingSkeleton/LoadingSkeleton";
+import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 const fetchPosts = async ({ queryKey }) => {
   const [, { page, sort }] = queryKey;
-  const url = sort === 'popular'
-    ? `${import.meta.env.VITE_API_URL}/posts/popular?page=${page}&limit=5`
-    : `${import.meta.env.VITE_API_URL}/posts?page=${page}&limit=5`;
+  const url =
+    sort === "popular"
+      ? `${import.meta.env.VITE_API_URL}/posts/popular?page=${page}&limit=5`
+      : `${import.meta.env.VITE_API_URL}/posts?page=${page}&limit=5`;
   const response = await axios.get(url);
   return response.data;
 };
@@ -22,19 +24,33 @@ const fetchTags = async () => {
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState('latest'); // 'latest' or 'popular'
-  const [selectedTag, setSelectedTag] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("latest"); // 'latest' or 'popular'
+  const [selectedTag, setSelectedTag] = useState("");
   const topRef = useRef(null);
 
-  const { data: postsData, isLoading: postsLoading, isError: postsError } = useQuery({
-    queryKey: ['posts', { page: currentPage, sort: sortOrder }],
+  const [isGridView, setIsGridView] = useState(true);
+
+  const toggleViewMode = () => {
+    setIsGridView(!isGridView);
+  };
+
+  const {
+    data: postsData,
+    isLoading: postsLoading,
+    isError: postsError,
+  } = useQuery({
+    queryKey: ["posts", { page: currentPage, sort: sortOrder }],
     queryFn: fetchPosts,
     keepPreviousData: true,
   });
 
-  const { data: tagsData, isLoading: tagsLoading, isError: tagsError } = useQuery({
-    queryKey: ['tags'],
+  const {
+    data: tagsData,
+    isLoading: tagsLoading,
+    isError: tagsError,
+  } = useQuery({
+    queryKey: ["tags"],
     queryFn: fetchTags,
   });
 
@@ -46,7 +62,7 @@ const Home = () => {
     event.preventDefault();
     setCurrentPage(page);
     if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
+      topRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -104,14 +120,30 @@ const Home = () => {
               key={tag._id}
               onClick={() => handleTagClick(tag.name)}
               className={`px-4 py-2 mx-1 my-1 text-gray-700 bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 ${
-                selectedTag === tag.name ? 'bg-blue-500 text-yellow-400-600 dark:text-gray-400 ' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+                selectedTag === tag.name
+                  ? "bg-blue-500 text-yellow-400-600 dark:text-gray-400 "
+                  : "hover:bg-gray-300 dark:hover:bg-gray-700"
               }`}
             >
               {tag.name}
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="md:flex hidden md:justify-end">
+          <button
+            onClick={toggleViewMode}
+            className="mb-4 px-4 py-2 border rounded-md text-2xl dark:text-white dark:hover:bg-slate-300 dark:hover:text-black hover:bg-blue-400 hover:text-white"
+          >
+            {isGridView ? <CiGrid2H /> : <CiGrid41 />}
+          </button>
+        </div>
+        <div
+          className={`${
+            isGridView
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              : "flex flex-col gap-4"
+          }`}
+        >
           {filteredPosts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
@@ -120,7 +152,9 @@ const Home = () => {
           <button
             onClick={(e) => handleButtonClick(e, Math.max(currentPage - 1, 1))}
             className={`px-4 py-2 mx-1 text-gray-500 bg-white rounded-md dark:bg-gray-800 dark:text-gray-600 ${
-              currentPage === 1 ? 'cursor-not-allowed' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+              currentPage === 1
+                ? "cursor-not-allowed"
+                : "hover:bg-gray-300 dark:hover:bg-gray-700"
             }`}
             disabled={currentPage === 1}
           >
@@ -131,16 +165,22 @@ const Home = () => {
               key={index}
               onClick={(e) => handleButtonClick(e, index + 1)}
               className={`px-4 hidden md:block py-2 mx-1 text-gray-700 bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 ${
-                currentPage === index + 1 ? 'bg-gray-600' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+                currentPage === index + 1
+                  ? "bg-gray-600"
+                  : "hover:bg-gray-300 dark:hover:bg-gray-700"
               }`}
             >
               {index + 1}
             </button>
           ))}
           <button
-            onClick={(e) => handleButtonClick(e, Math.min(currentPage + 1, totalPages))}
+            onClick={(e) =>
+              handleButtonClick(e, Math.min(currentPage + 1, totalPages))
+            }
             className={`px-4 py-2 mx-1 text-gray-500 bg-white rounded-md dark:bg-gray-800 dark:text-gray-600 ${
-              currentPage === totalPages ? 'cursor-not-allowed' : 'hover:bg-gray-300 dark:hover:bg-gray-700'
+              currentPage === totalPages
+                ? "cursor-not-allowed"
+                : "hover:bg-gray-300 dark:hover:bg-gray-700"
             }`}
             disabled={currentPage === totalPages}
           >

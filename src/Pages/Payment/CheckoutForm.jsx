@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
@@ -16,23 +16,12 @@ const CheckoutForm = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const { data: userId = {} } = useQuery({
-        queryKey: ["userId"],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/user/${user?.email}`);
-            return res.data;
-        },
-    });
-
-    console.log(userId.email);
-
     const totalPrice = 9;
 
     useEffect(() => {
         if (totalPrice > 0) {
             axiosSecure.post('/create-payment-intent', { price: totalPrice })
                 .then(res => {
-                    console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
                 })
         }
@@ -52,16 +41,14 @@ const CheckoutForm = () => {
             return;
         }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card
         });
 
         if (error) {
-            console.log('payment error', error);
             setError(error.message);
         } else {
-            console.log('payment method', paymentMethod);
             setError('');
         }
 
@@ -77,12 +64,9 @@ const CheckoutForm = () => {
         });
 
         if (confirmError) {
-            console.log('confirm error');
             setError(confirmError.message);
         } else {
-            console.log('payment intent', paymentIntent);
             if (paymentIntent.status === 'succeeded') {
-                console.log('transaction id', paymentIntent.id);
                 setTransactionId(paymentIntent.id);
 
                 // save the payment in the database
@@ -94,13 +78,13 @@ const CheckoutForm = () => {
                 };
 
                 const res = await axiosSecure.post('/payments', payment);
-                console.log('payment saved', res.data);
 
                 if (res.data?.paymentResult?.insertedId) {
+                    toast.success("Thank you for Your Transaction")
                     Swal.fire({
-                        position: "top-end",
+                        position: "center",
                         icon: "success",
-                        title: "Thank you for Your Transaction",
+                        title: "Congratulations! You're a GOLD Member",
                         showConfirmButton: false,
                         timer: 1500
                     });

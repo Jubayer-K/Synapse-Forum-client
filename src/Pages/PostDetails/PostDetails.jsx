@@ -87,7 +87,7 @@ const PostDetails = () => {
         window.location.reload();
       }, 1000);
     } catch (err) {
-      console.log(err);
+      console.err(err);
     }
   };
 

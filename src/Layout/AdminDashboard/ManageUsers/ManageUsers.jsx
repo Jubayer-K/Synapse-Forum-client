@@ -49,7 +49,7 @@ const ManageUsers = () => {
       label: "Actions",
       options: {
         customBodyRender: (value, tableMeta) => {
-          const userRole = tableMeta.rowData[2]; // Assuming role is the third column
+          const userRole = tableMeta.rowData[2];
           return userRole !== "admin" ? (
             <button onClick={() => handleMakeAdmin(value)} className="btn hover:bg-blue-400 hover:text-white">
               Make Admin
