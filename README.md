@@ -15,7 +15,7 @@ Follow these steps to clone and set up the project locally:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/Jubayer-K/Synapse-Forum-client.git
 
 
 2. **Navigate to the Project Directory:**
