@@ -8,6 +8,28 @@ Welcome to the Synapse Forum! This website allows forum administrators to manage
 - **Password:** 12345678Ab!
 - **Live Site URL:** [Synapse Forum](https://twelfth-assignment-forum.web.app)
 
+
+### Cloning the Repository
+
+Follow these steps to clone and set up the project locally:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/username/repository-name.git
+
+
+2. **Navigate to the Project Directory:**
+   ```bash
+   cd repository-name
+
+3. **Install Dependencies:**
+   ```bash
+   npm install
+   
+3. **To start the development server, run:**
+   ```bash
+   npm run dev
+   
 ## Features
 
 1. **User Management**
